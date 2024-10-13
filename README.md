@@ -11,9 +11,21 @@
 
 ### 具体修改
 首先获取空间机器人模型，将其从urdf格式改为xml格式，方法可参照https://blog.csdn.net/Time_Memory_cici/article/details/138198171。
-导出来的模型主要包含`asset`和`worldbody`属性，为了保证后续仿真，需要添加`actuator`属性，格式大致如下：
+导出来的模型主要包含`asset`和`worldbody`属性，为了保证后续仿真，需要为每个关节添加`actuator`属性，格式大致如下：
 ```
 <actuator>
         <general biasprm="0 0 -100" biastype="affine" ctrllimited="true" ctrlrange="-2.0942 2.0942" forcelimited="true" forcerange="-150 150" gainprm="100 0 0" joint="joint1" name="joint1_T" />
 </actuator>
+```
+然后添加目标卫星模块：现在`asset`里定义，再在`worldbody`里调用即可
+再添加地球背景：找一张太空拍摄的地球圆形图片，**注意必须是png格式**，在`asset`里定义，再在`worldbody`里调用，大致如下：
+```
+    <asset>
+        <!-- 地球背景设置 -->
+        <texture name="earth" type="2d" file="stl/earth.png" />
+        <material name="earth_material" texture="earth" texrepeat="1 1" rgba="1 1 1 1"/>
+    </asset>
+    <worldbody>
+        <!-- 地球背景设置 -->
+        <geom name="earth_background" type="sphere" size="50" material="earth_material" pos="-50 0 -30" euler="0 1.57 0" />
 ```
