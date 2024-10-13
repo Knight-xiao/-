@@ -10,5 +10,9 @@
 目前只需要搭建空间机器人仿真环境，因此主要关注`SpaceRobotEnv`文件夹，该文件夹下的`asset`文件夹是机器人模型文件，`envs`则构建了数个空间机器人仿真环境，具体详看链接的项目介绍。要添加我们自己的空间机器人环境，主要在这两个文件夹下修改。
 
 ### 具体修改
-首先获取空间机器人模型，将其从urdf格式改为xml格式，方法可参照https://blog.csdn.net/Time_Memory_cici/article/details/138198171
-
+首先获取空间机器人模型，将其从urdf格式改为xml格式，方法可参照https://blog.csdn.net/Time_Memory_cici/article/details/138198171。导出来的模型主要包含`asset`和`worldbody`属性，为了保证后续仿真，需要添加`actuator`属性，格式大致如下：
+```
+<actuator>
+        <general biasprm="0 0 -100" biastype="affine" ctrllimited="true" ctrlrange="-2.0942 2.0942" forcelimited="true" forcerange="-150 150" gainprm="100 0 0" joint="joint1" name="joint1_T" />
+</actuator>
+```
